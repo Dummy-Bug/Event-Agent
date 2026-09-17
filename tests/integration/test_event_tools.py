@@ -1,5 +1,3 @@
-import json
-
 import pytest
 
 from event_agent.models.events import GetEventImageInput, SearchEventsInput
@@ -12,11 +10,12 @@ async def test_search_events_live_api():
     payload = SearchEventsInput(country_code="US", page_size=2)
 
     response = await search_events(payload)
-    body = json.loads(response)
 
-    assert body["page"]["size"] == 2
-    assert body["page"]["number"] == 0
-    assert len(body["_embedded"]["events"]) <= 2
+    assert response.page is not None
+    assert response.embedded is not None
+    assert response.page.size == 2
+    assert response.page.number == 0
+    assert len(response.embedded.events) <= 2
 
 
 @pytest.mark.anyio
@@ -26,4 +25,5 @@ async def test_fetch_events_image_live_api():
     payload = GetEventImageInput(id=event_id)
 
     response = await fetch_event_image(payload)
-    body = json.loads(response)
+
+    assert response.id == event_id

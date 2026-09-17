@@ -35,5 +35,3 @@ class SearchEventsInput(BaseModel):
         serialization_alias="page",
         description="Zero-based page number to retrieve for paginated search results.",
     )
-
-
