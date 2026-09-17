@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 
-class EventImage(BaseModel):
+class GetEventImageInput(BaseModel):
     id: str = Field(
         description="Unique identifier of the event whose Image is to be retrieved."
     )
