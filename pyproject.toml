@@ -8,7 +8,13 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
+    "httpx>=0.28.1",
     "langchain>=1.4.1",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+    "ty>=0.0.81",
 ]
 
 [project.scripts]
@@ -17,3 +23,8 @@ event-agent = "event_agent:main"
 [build-system]
 requires = ["uv_build>=0.12.15,<0.13.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "anyio>=4.15.1",
+]
