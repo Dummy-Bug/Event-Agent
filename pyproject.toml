@@ -1,0 +1,19 @@
+[project]
+name = "event-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "LaxitRana", email = "laxit.rana@repute.net" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "langchain>=1.4.1",
+]
+
+[project.scripts]
+event-agent = "event_agent:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
