@@ -10,7 +10,8 @@ class EventImage(BaseModel):
 class SearchEventsInput(BaseModel):
     # Required
     country_code: str = Field(
-        description="ISO 3166-1 alpha-2 country code to filter events by location (e.g., 'US', 'GB', 'IN')."
+        serialization_alias="countryCode",
+        description="ISO 3166-1 alpha-2 country code to filter events by location (e.g., 'US', 'GB', 'IN').",
     )
 
     # Optional Filters
@@ -24,11 +25,13 @@ class SearchEventsInput(BaseModel):
         default=10,
         ge=1,
         le=100,
+        serialization_alias="size",
         description="Number of event results to return per page (1–100).",
     )
 
     page_number: int | None = Field(
-        default=1,
-        ge=1,
-        description="Page number to retrieve for paginated search results.",
+        default=0,
+        ge=0,
+        serialization_alias="page",
+        description="Zero-based page number to retrieve for paginated search results.",
     )

@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from event_agent.models.events import SearchEventsInput
@@ -10,5 +12,8 @@ async def test_search_events_live_api():
     payload = SearchEventsInput(country_code="US", page_size=2)
 
     response = await search_events(payload)
+    body = json.loads(response)
 
-    print(response)
+    assert body["page"]["size"] == 2
+    assert body["page"]["number"] == 0
+    assert len(body["_embedded"]["events"]) <= 2
