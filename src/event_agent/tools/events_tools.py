@@ -12,7 +12,6 @@ async def search_events(args: SearchEventsInput) -> str:
 
     async with httpx.AsyncClient() as client:
         response = await client.get(url, params=params)
-        print(response)
         response.raise_for_status()
         return response.text
 
