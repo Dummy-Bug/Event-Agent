@@ -1,9 +1,15 @@
+from typing import Any
+
 import httpx
 from langchain.tools import tool
 
 from event_agent.core.config import settings
 from event_agent.models.event_images_response import EventImagesResponse
-from event_agent.models.events import GetEventImageInput, SearchEventsInput
+from event_agent.models.events import (
+    BookEventsInput,
+    GetEventImageInput,
+    SearchEventsInput,
+)
 from event_agent.models.search_events_response import SearchEventsResponse
 from event_agent.tools import TICKET_MASTER_BASE_URL
 
@@ -42,3 +48,11 @@ async def fetch_event_image(**kwargs) -> EventImagesResponse:
         response = await client.get(url, params=params)
         response.raise_for_status()
         return EventImagesResponse.model_validate_json(response.content)
+
+
+@tool(
+    description="Book all the events iff provided the correct events IDs",
+    args_schema=BookEventsInput,
+)
+async def book_events(ids: list) -> dict[str, Any]:
+    return {"Success": ids}

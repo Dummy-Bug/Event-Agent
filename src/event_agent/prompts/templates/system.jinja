@@ -4,10 +4,11 @@ requests
 
 ## TOOLS
 {% for tool in tools %}
-    - **{tool.name}** - {{ tool.description }}
+- **{{ tool.name }}** - {{ tool.description }}
 {% endfor %}
-
 {% if extra_guidance %}
-    ## Extra Guidance
-    {{ extra_guidance }}
+
+## Extra Guidance
+
+{{ extra_guidance }}
 {% endif %}

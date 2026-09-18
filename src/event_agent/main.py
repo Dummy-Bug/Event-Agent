@@ -4,37 +4,11 @@ import uuid
 from langchain_core.runnables import RunnableConfig
 
 from event_agent.agent import build_agent
-from event_agent.models.provider import (
-    Provider,
-    default_provider,
-    provider_names,
-    select_provider,
-)
-
-
-async def ask_for_provider() -> Provider:
-
-    names = provider_names()
-    fallback = default_provider()
-
-    if len(names) == 1:
-        return fallback
-
-    print("Providers:")
-    for position, name in enumerate(names, start=1):
-        print(f"  {position}. {name}")
-
-    answer = await asyncio.to_thread(input, "Choose a Provider -> ")
-
-    if answer.strip().isdigit():
-        position = int(answer.strip())
-        answer = names[position - 1] if 1 <= position <= len(names) else ""
-
-    return select_provider(answer)
+from event_agent.models.provider import default_provider
 
 
 async def main():
-    provider = await ask_for_provider()
+    provider = default_provider()
     print(f"Using {provider.name}.\n")
 
     agent = build_agent(provider)
@@ -54,5 +28,9 @@ async def main():
         print("Agent ->", response["messages"][-1].text)
 
 
-if __name__ == "__main__":
+def run() -> None:
     asyncio.run(main())
+
+
+if __name__ == "__main__":
+    run()

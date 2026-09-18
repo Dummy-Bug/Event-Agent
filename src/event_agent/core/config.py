@@ -4,7 +4,6 @@ from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ENV_FILE = Path(__file__).resolve().parents[3] / ".env"
-PROMPT_DIR = Path(__file__).resolve().parents[3] / "prompts"
 
 
 class Settings(BaseSettings):
@@ -19,8 +18,6 @@ class Settings(BaseSettings):
     open_router_api_key: SecretStr | None = Field(
         default=None, validation_alias="OPEN_ROUTER_API_KEY"
     )
-
-    prompts_directory: Path = PROMPT_DIR
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,

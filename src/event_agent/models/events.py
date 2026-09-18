@@ -32,3 +32,10 @@ class SearchEventsInput(BaseModel):
         serialization_alias="page",
         description="Zero-based page number to retrieve for paginated search results.",
     )
+
+
+class BookEventsInput(BaseModel):
+    ids: list = Field(
+        default_factory=list,
+        description="Unique identifiers of all the Events to be booked",
+    )

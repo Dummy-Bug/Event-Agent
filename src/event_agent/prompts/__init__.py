@@ -1,23 +1,35 @@
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from collections.abc import Sequence
+from pathlib import Path
 
-from event_agent.core.config import settings
+from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from langchain_core.tools import BaseTool
+
+TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
 
 _env = Environment(
-    loader=FileSystemLoader(settings.prompts_directory),
-    autoescape=select_autoescape(),
+    loader=FileSystemLoader(TEMPLATE_DIR),
+    autoescape=False,
+    undefined=StrictUndefined,
     trim_blocks=True,
     lstrip_blocks=True,
+    keep_trailing_newline=True,
 )
 
 
-def _render_template(*, template_name: str, **context):
+def _render_template(*, template_name: str, **context) -> str:
     return _env.get_template(template_name).render(context)
 
 
-def build_system_prompt(*, agent_name: str, extra_guidance: str | None = None) -> str:
+def build_system_prompt(
+    *,
+    agent_name: str,
+    tools: Sequence[BaseTool],
+    extra_guidance: str | None = None,
+) -> str:
     return _render_template(
         template_name="system.jinja",
         agent_name=agent_name,
+        tools=tools,
         extra_guidance=extra_guidance,
     )
 
