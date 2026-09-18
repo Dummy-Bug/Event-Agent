@@ -47,7 +47,6 @@ async def test_get_venue_details_returns_the_requested_venue(live_venue_id: str)
     assert response.address is not None
     assert response.address.line1
 
-    # Anything Ticketmaster sends that the model does not declare lands in extras.
     assert response.model_extra == {}
 
 

@@ -8,18 +8,15 @@ class VenueDetailsInput(BaseModel):
 
 
 class VenueSearch(BaseModel):
-    # Required
     country_code: str = Field(
         description="ISO 3166-1 alpha-2 country code to search venues in (e.g., 'US', 'GB', 'IN')."
     )
 
-    # Optional Filters
     id: str | None = Field(
         default=None,
         description="Unique identifier to retrieve a specific venue directly.",
     )
 
-    # Pagination
     page_size: int = Field(
         default=10,
         ge=1,

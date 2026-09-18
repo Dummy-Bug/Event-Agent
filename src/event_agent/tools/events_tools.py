@@ -5,6 +5,7 @@ from event_agent.core.config import settings
 from event_agent.models.event_images_response import EventImagesResponse
 from event_agent.models.events import GetEventImageInput, SearchEventsInput
 from event_agent.models.search_events_response import SearchEventsResponse
+from event_agent.tools import TICKET_MASTER_BASE_URL
 
 
 @tool(
@@ -15,7 +16,7 @@ async def search_events(**kwargs) -> SearchEventsResponse:
 
     args = SearchEventsInput(**kwargs)
 
-    url = settings.ticket_master_base_url + "events"
+    url = TICKET_MASTER_BASE_URL + "events"
 
     params: dict = args.model_dump(by_alias=True, exclude_none=True)
     params["apikey"] = settings.ticket_master_api_key.get_secret_value()
@@ -33,7 +34,7 @@ async def search_events(**kwargs) -> SearchEventsResponse:
 async def fetch_event_image(**kwargs) -> EventImagesResponse:
     args = GetEventImageInput(**kwargs)
 
-    url = settings.ticket_master_base_url + f"events/{args.id}/images"
+    url = TICKET_MASTER_BASE_URL + f"events/{args.id}/images"
 
     params: dict = {"apikey": settings.ticket_master_api_key.get_secret_value()}
 

@@ -333,9 +333,7 @@ class SearchEventsEmbedded(TicketmasterModel):
     events: list[Event] = Field(default_factory=list)
 
 
-# GET /events
 class SearchEventsResponse(TicketmasterModel):
-    # Absent when the search matches no events
     embedded: SearchEventsEmbedded | None = Field(default=None, alias="_embedded")
     page: Page | None = None
     links: PageLinks | None = Field(default=None, alias="_links")

@@ -4,7 +4,16 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     ticket_master_api_key: SecretStr = Field(validation_alias="TICKET_MASTER_API_KEY")
-    ticket_master_base_url: str = Field(validation_alias="TICKET_MASTER_BASE_URL")
+
+    google_api_key: SecretStr | None = Field(
+        default=None, validation_alias="GOOGLE_API_KEY"
+    )
+    groq_api_key: SecretStr | None = Field(
+        default=None, validation_alias="GROQ_API_KEY"
+    )
+    open_router_api_key: SecretStr | None = Field(
+        default=None, validation_alias="OPEN_ROUTER_API_KEY"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

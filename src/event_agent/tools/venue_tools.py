@@ -4,6 +4,7 @@ from langchain.tools import tool
 from event_agent.core.config import settings
 from event_agent.models.venue import VenueDetailsInput
 from event_agent.models.venue_details_response import VenueDetailsResponse
+from event_agent.tools import TICKET_MASTER_BASE_URL
 
 
 @tool(
@@ -11,7 +12,7 @@ from event_agent.models.venue_details_response import VenueDetailsResponse
     args_schema=VenueDetailsInput,
 )
 async def get_venue_details(id: str) -> VenueDetailsResponse:
-    url = settings.ticket_master_base_url + f"venues/{id}"
+    url = TICKET_MASTER_BASE_URL + f"venues/{id}"
 
     params: dict = {"apikey": settings.ticket_master_api_key.get_secret_value()}
 

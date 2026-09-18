@@ -8,19 +8,16 @@ class GetEventImageInput(BaseModel):
 
 
 class SearchEventsInput(BaseModel):
-    # Required
     country_code: str = Field(
         serialization_alias="countryCode",
         description="ISO 3166-1 alpha-2 country code to filter events by location (e.g., 'US', 'GB', 'IN').",
     )
 
-    # Optional Filters
     id: str | None = Field(
         default=None,
         description="Unique identifier to retrieve a specific event directly.",
     )
 
-    # Pagination
     page_size: int = Field(
         default=10,
         ge=1,
