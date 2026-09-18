@@ -54,9 +54,5 @@ async def main():
         print("Agent ->", response["messages"][-1].text)
 
 
-def run() -> None:
-    asyncio.run(main())
-
-
 if __name__ == "__main__":
-    run()
+    asyncio.run(main())

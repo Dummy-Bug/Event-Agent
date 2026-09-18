@@ -3,6 +3,7 @@ from langchain.chat_models import init_chat_model
 from langgraph.checkpoint.memory import InMemorySaver
 
 from event_agent.models.provider import NoProviderConfiguredError, Provider
+from event_agent.prompts import build_system_prompt
 from event_agent.tools.events_tools import fetch_event_image, search_events
 from event_agent.tools.venue_tools import get_venue_details
 
@@ -33,4 +34,5 @@ def build_agent(provider: Provider):
         model=init_chat_model(**kwargs),
         tools=TOOLS,
         checkpointer=InMemorySaver(),
+        system_prompt=build_system_prompt(agent_name="EVE-AI"),
     )
