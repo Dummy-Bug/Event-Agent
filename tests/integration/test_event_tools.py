@@ -24,6 +24,6 @@ async def test_fetch_events_image_live_api():
     event_id = "1AvjZ_aGkU6vXnK"
     payload = GetEventImageInput(id=event_id)
 
-    response = await fetch_event_image(payload)
+    response = await fetch_event_image.ainvoke(payload.model_dump())
 
     assert response.id == event_id

@@ -26,7 +26,13 @@ async def search_events(**kwargs) -> SearchEventsResponse:
         return SearchEventsResponse.model_validate_json(response.content)
 
 
-async def fetch_event_image(args: GetEventImageInput) -> EventImagesResponse:
+@tool(
+    description="Fetches the Images of an Event given the event ID.",
+    args_schema=GetEventImageInput,
+)
+async def fetch_event_image(**kwargs) -> EventImagesResponse:
+    args = GetEventImageInput(**kwargs)
+
     url = settings.ticket_master_base_url + f"events/{args.id}/images"
 
     params: dict = {"apikey": settings.ticket_master_api_key.get_secret_value()}
