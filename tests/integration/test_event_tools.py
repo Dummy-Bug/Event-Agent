@@ -53,7 +53,7 @@ async def test_search_events_returns_the_requested_page():
 @pytest.mark.anyio
 async def test_fetch_event_image_returns_images_for_a_real_event(live_event: Event):
     """The images endpoint answers for the same id the search handed back."""
-    payload = GetEventImageInput(id=live_event.id)
+    payload = GetEventImageInput(event_id=live_event.id)
 
     response = await fetch_event_image.ainvoke(payload.model_dump())
 
@@ -67,7 +67,7 @@ async def test_fetch_event_image_returns_images_for_a_real_event(live_event: Eve
 @pytest.mark.anyio
 async def test_fetch_event_image_raises_on_an_unknown_event():
     """A 404 surfaces as an httpx error rather than as an empty model."""
-    payload = GetEventImageInput(id=UNKNOWN_ID)
+    payload = GetEventImageInput(event_id=UNKNOWN_ID)
 
     with pytest.raises(httpx.HTTPStatusError) as caught:
         await fetch_event_image.ainvoke(payload.model_dump())

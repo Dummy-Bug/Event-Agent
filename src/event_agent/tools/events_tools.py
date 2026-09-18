@@ -55,10 +55,8 @@ async def get_event_details(event_id: str) -> EventDetailsResponse:
     description="Fetches the Images of an Event given the event ID.",
     args_schema=GetEventImageInput,
 )
-async def fetch_event_image(**kwargs) -> EventImagesResponse:
-    args = GetEventImageInput(**kwargs)
-
-    url = TICKET_MASTER_BASE_URL + f"events/{args.id}/images"
+async def fetch_event_image(event_id: str) -> EventImagesResponse:
+    url = TICKET_MASTER_BASE_URL + f"events/{event_id}/images"
 
     params: dict = {"apikey": settings.ticket_master_api_key.get_secret_value()}
 

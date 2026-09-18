@@ -30,7 +30,7 @@ async def live_venue_id(anyio_backend) -> str:
 @pytest.mark.anyio
 async def test_get_venue_details_returns_the_requested_venue(live_venue_id: str):
     """The id asked for comes back, with the fields every venue in a 120-sample sweep had."""
-    payload = VenueDetailsInput(id=live_venue_id)
+    payload = VenueDetailsInput(venue_id=live_venue_id)
 
     response = await get_venue_details.ainvoke(payload.model_dump())
 
@@ -52,6 +52,6 @@ async def test_get_venue_details_returns_the_requested_venue(live_venue_id: str)
 async def test_get_venue_details_raises_on_an_unknown_venue():
     """A 404 surfaces as an httpx error rather than as an empty model."""
     with pytest.raises(httpx.HTTPStatusError) as caught:
-        await get_venue_details.ainvoke({"id": UNKNOWN_ID})
+        await get_venue_details.ainvoke({"venue_id": UNKNOWN_ID})
 
     assert caught.value.response.status_code == 404

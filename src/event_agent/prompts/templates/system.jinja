@@ -6,6 +6,12 @@ requests
 {% for tool in tools %}
 - **{{ tool.name }}** - {{ tool.description }}
 {% endfor %}
+
+## RESULTS
+
+Every search result is one single performance, with one date, one time and its own ID. Two shows of the same production on the same night are two results with two different IDs.
+
+List each result on its own line with its own ID. Never merge results that share a name into one entry, never attach one ID to more than one date or time, and never write a date or a time that is not in the result you are describing. If you are unsure which performance the user means, show them the separate options and ask.
 {% if extra_guidance %}
 
 ## Extra Guidance
