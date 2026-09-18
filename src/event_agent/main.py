@@ -33,7 +33,7 @@ async def ask_for_provider() -> Provider:
     return select_provider(answer)
 
 
-async def start_agent():
+async def main():
     provider = await ask_for_provider()
     print(f"Using {provider.name}.\n")
 
@@ -52,3 +52,11 @@ async def start_agent():
         )
 
         print("Agent ->", response["messages"][-1].text)
+
+
+def run() -> None:
+    asyncio.run(main())
+
+
+if __name__ == "__main__":
+    run()
