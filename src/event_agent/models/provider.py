@@ -47,12 +47,10 @@ PROVIDERS: list[Provider] = [
 
 
 def available_providers() -> list[Provider]:
-    """Only the providers holding a key, in declaration order."""
     return [provider for provider in PROVIDERS if provider.is_configured]
 
 
 def default_provider() -> Provider:
-    """The first configured provider. Declaration order is the preference order."""
     available = available_providers()
     if not available:
         wanted = ", ".join(provider.name for provider in PROVIDERS)

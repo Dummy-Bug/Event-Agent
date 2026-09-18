@@ -42,12 +42,10 @@ async def test_get_venue_details_returns_the_requested_venue(live_venue_id: str)
 
     assert response.city is not None
     assert response.city.name
-    assert response.country is not None
-    assert response.country.country_code == COUNTRY
-    assert response.address is not None
-    assert response.address.line1
+    assert response.state is not None
+    assert response.state.state_code
 
-    assert response.model_extra == {}
+    assert response.model_extra is None, "a venue should drop what it does not declare"
 
 
 @pytest.mark.anyio

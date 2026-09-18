@@ -38,7 +38,7 @@ async def test_search_events_returns_the_requested_page():
 
     checked = 0
     for event in response.embedded.events:
-        assert event.model_extra == {}
+        assert event.model_extra is None, "an event should drop what it does not declare"
         if event.embedded is None:
             continue
         for venue in event.embedded.venues:

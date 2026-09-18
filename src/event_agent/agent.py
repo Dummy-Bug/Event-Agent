@@ -4,10 +4,22 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 from event_agent.models.provider import NoProviderConfiguredError, Provider
 from event_agent.prompts import build_system_prompt
-from event_agent.tools.events_tools import fetch_event_image, search_events, book_events
-from event_agent.tools.venue_tools import get_venue_details
+from event_agent.tools.events_tools import (
+    book_events,
+    fetch_event_image,
+    get_event_details,
+    search_events,
+)
+from event_agent.tools.venue_tools import get_venue_details, search_venues
 
-TOOLS = [search_events, fetch_event_image, get_venue_details,book_events]
+TOOLS = [
+    search_events,
+    get_event_details,
+    fetch_event_image,
+    search_venues,
+    get_venue_details,
+    book_events,
+]
 
 
 def build_agent(provider: Provider):
