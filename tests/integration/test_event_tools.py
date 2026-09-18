@@ -9,7 +9,7 @@ async def test_search_events_live_api():
     """Test calling the search_events tool against Ticketmaster's live endpoint."""
     payload = SearchEventsInput(country_code="US", page_size=2)
 
-    response = await search_events(payload)
+    response = await search_events.ainvoke(payload.model_dump())
 
     assert response.page is not None
     assert response.embedded is not None

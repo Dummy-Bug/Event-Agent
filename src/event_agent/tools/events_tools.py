@@ -1,4 +1,5 @@
 import httpx
+from langchain.tools import tool
 
 from event_agent.core.config import settings
 from event_agent.models.event_images_response import EventImagesResponse
@@ -6,7 +7,14 @@ from event_agent.models.events import GetEventImageInput, SearchEventsInput
 from event_agent.models.search_events_response import SearchEventsResponse
 
 
-async def search_events(args: SearchEventsInput) -> SearchEventsResponse:
+@tool(
+    description="Search Ticketmaster for events happening within a single country. Requires an ISO 3166-1 alpha-2 country code.",
+    args_schema=SearchEventsInput,
+)
+async def search_events(**kwargs) -> SearchEventsResponse:
+
+    args = SearchEventsInput(**kwargs)
+
     url = settings.ticket_master_base_url + "events"
 
     params: dict = args.model_dump(by_alias=True, exclude_none=True)

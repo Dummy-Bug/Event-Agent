@@ -24,7 +24,7 @@ class SearchEventsInput(BaseModel):
     page_size: int = Field(
         default=10,
         ge=1,
-        le=100,
+        le=20,
         serialization_alias="size",
         description="Number of event results to return per page (1–100).",
     )
