@@ -1,11 +1,11 @@
 from datetime import UTC, datetime
 
-from event_agent.models.model_response import Response
 from langchain.agents import create_agent
 from langchain.agents.middleware import ModelRequest, dynamic_prompt
 from langchain.chat_models import init_chat_model
 from langgraph.checkpoint.memory import InMemorySaver
 
+from event_agent.models.model_response import Response
 from event_agent.models.provider import NoProviderConfiguredError, Provider
 from event_agent.prompts import build_system_prompt
 from event_agent.tools.events_tools import (
