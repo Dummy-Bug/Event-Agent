@@ -32,11 +32,18 @@ async def main():
 
                 if node == "tools":
                     print(f"Tool Node: {node}")
-                else:
-                    print(f"Other Node: {node}")
+                    print(f"Response from the Too Node : content_block {token.content_blocks}")
+                    print("\n")
+                    continue
 
-                print(f"content: {token.content_blocks}")
-                print("\n")
+                if token.tool_calls or token.tool_call_chunks:
+                    print(f"Tool Call (internal): {token.tool_calls or token.tool_call_chunks}")
+                    print("\n")
+                    continue
+
+                if token.content:
+                    print(f"UI Text: {token.content}")
+                    print("\n")
             elif chunk["type"] == "custom":
                 print(f"Custom Event: {chunk['data']}")
                 print("\n")
