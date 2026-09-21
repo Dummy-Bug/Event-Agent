@@ -24,12 +24,14 @@ def build_system_prompt(
     *,
     agent_name: str,
     tools: Sequence[BaseTool],
+    current_time: str,
     extra_guidance: str | None = None,
 ) -> str:
     return _render_template(
         template_name="system.jinja",
         agent_name=agent_name,
         tools=tools,
+        current_time=current_time,
         extra_guidance=extra_guidance,
     )
 

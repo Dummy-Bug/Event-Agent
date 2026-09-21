@@ -1,4 +1,8 @@
+from datetime import UTC, datetime
+
+from event_agent.models.model_response import Response
 from langchain.agents import create_agent
+from langchain.agents.middleware import ModelRequest, dynamic_prompt
 from langchain.chat_models import init_chat_model
 from langgraph.checkpoint.memory import InMemorySaver
 
@@ -42,9 +46,18 @@ def build_agent(provider: Provider):
     if provider.base_url is not None:
         kwargs["base_url"] = provider.base_url
 
+    @dynamic_prompt
+    def system_prompt(request: ModelRequest) -> str:
+        return build_system_prompt(
+            agent_name="Claudia",
+            tools=TOOLS,
+            current_time=datetime.now(UTC).isoformat(timespec="seconds"),
+        )
+
     return create_agent(
         model=init_chat_model(**kwargs),
         tools=TOOLS,
         checkpointer=InMemorySaver(),
-        system_prompt=build_system_prompt(agent_name="EVE-AI", tools=TOOLS),
+        middleware=[system_prompt],
+        response_format=Response,
     )

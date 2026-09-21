@@ -20,12 +20,23 @@ async def main():
         if user_text.lower() in ["q", "quit", "exit"]:
             break
 
-        response = await agent.ainvoke(
-            input={"messages": [{"role": "user", "content": user_text}]},
+        async for chunk in agent.astream(
+            {"messages": [{"role": "user", "content": user_text}]},
+            stream_mode=["messages", "custom"],
+            version="v2",
             config=config,
-        )
+        ):
+            if chunk["type"] == "messages":
+                token, metadata = chunk["data"]
+                node = metadata["langgraph_node"]
 
-        print("Agent ->", response["messages"][-1].text)
+                if node == "tools":
+                    print(f"Tool Node: {node}")
+                else:
+                    print(f"Other Node: {node}")
+
+                print(f"content: {token.content_blocks}")
+                print("\n")
 
 
 def run() -> None:
