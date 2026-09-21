@@ -2,6 +2,7 @@ from typing import Any
 
 import httpx
 from langchain.tools import tool
+from langgraph.config import get_stream_writer
 
 from event_agent.core.config import settings
 from event_agent.models.event_details_response import EventDetailsResponse
@@ -30,9 +31,20 @@ async def search_events(**kwargs) -> SearchEventsResponse:
     params["apikey"] = settings.ticket_master_api_key.get_secret_value()
 
     async with httpx.AsyncClient() as client:
+
+        try:
+            writer = get_stream_writer()
+        except KeyError:
+            writer = None
+
+        if writer is not None:
+            writer({"type": "status", "status": "searching events"})
+
         response = await client.get(url, params=params)
         response.raise_for_status()
-        return SearchEventsResponse.model_validate_json(response.content)
+        result = SearchEventsResponse.model_validate_json(response.content)
+
+    return result
 
 
 @tool(

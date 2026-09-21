@@ -37,6 +37,9 @@ async def main():
 
                 print(f"content: {token.content_blocks}")
                 print("\n")
+            elif chunk["type"] == "custom":
+                print(f"Custom Event: {chunk['data']}")
+                print("\n")
 
 
 def run() -> None:
